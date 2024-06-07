@@ -1,0 +1,1 @@
+SELECT AVG("height") AS "Average Height", AVG("weight") AS "Average Weight" FROM "players" WHERE "debut" >= '2000-01-01';
