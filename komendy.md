@@ -16,6 +16,7 @@
 - `docker ps` (List running containers)
 
 ## Git Commands
+- `apt-get install git` install git
 - `git init` Initialise .git folder
 - `git remote add origin https://github.com/pagrochowski/CS50_SQL.git` Connect to GitHub repository
 - `git remote -v` check your current remote repository
@@ -27,9 +28,21 @@
     `git commit -m "Add .gitignore file"`
     `git push`
 
-- `git add .` (Stage all changes)
-- `git commit -m "Your commit message"` (Commit changes)
-- `git push origin main` (Push to the 'main' branch on the 'origin' remote)
+- initialise new repository with SSH access after fresh installation
+    `mkdir ~/.ssh` create ssh folder
+    `chmod 700 ~/.ssh` grant access to the ssh folder
+    `ssh-keygen -t rsa -b 4096 -C "pagrochowski@gmail.com"` create ssh key
+    `eval "$(ssh-agent -s)"` check the ssh agent is online and working
+    `ssh-add ~/.ssh/id_rsa` add identity to the ssh file
+    `cat ~/.ssh/id_rsa.pub` read the ssh public key, add it to github account -> settings -> ssh
+    `ssh -T git@github.com` verify connection
+    `git config --global user.email "pagrochowski@gmail.com"`
+    `git config --global user.name "pagrochowski"`
+
+- manually push the files to repository
+    - `git add .` (Stage all changes)
+    - `git commit -m "Your commit message"` (Commit changes)
+    - `git push origin master` (Push to the 'master' branch on the 'origin' remote)
 
 ## Python Commands
 - `pip freeze > requirements.txt` (Save dependencies to a file)
@@ -54,7 +67,6 @@
 - check status `sudo systemctl status gunicorn.socket`
 - `sudo systemctl reset-failed gunicorn.socket` reset failed restart
 
-
 ## SSH console editor
 - `CTRL+O` save file, `ENTER` to confirm changes
 - `CTRL+X` exit file
@@ -62,3 +74,6 @@
 - `ALT+M` for mouse support
 - `sudo su -` gain access as root user
 
+## Ollama
+`ollama serve` is starting the service on Linux
+`ollama run ...` and choose a model to run/download

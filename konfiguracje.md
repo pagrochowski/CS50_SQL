@@ -1,5 +1,47 @@
 # Moje konfiguracje
 
+## Ollama
+
+## Gmail CTL
+Quickstart tutorial:
+https://mailtrap.io/blog/send-emails-with-gmail-api/
+
+to add "piotr.adrian.grochowski@gmail.com", you have to add "pagrochowski" first, then edit project and add piotr.adrian, then remove pagrochowski
+
+`go install github.com/mbrt/gmailctl/cmd/gmailctl@latest` command line for gmail accounts
+`gmailctl init`
+https://github.com/mbrt/gmailctl
+
+
+## Ollama
+1. Download Ollama
+https://ollama.com/download
+
+Currently installed on my pc:
+https://ollama.com/library/llama2
+
+2. Launch the model locally
+CLI
+Open the terminal and run ollama run llama2
+
+3. Add API configuration to the Python script
+API
+Example using curl:
+
+curl -X POST http://localhost:11434/api/generate -d '{
+  "model": "llama2",
+  "prompt":"Why is the sky blue?"
+ }'
+
+
+## GO.mod installation
+`curl -fsSL -o go.tar.gz https://golang.org/dl/go1.19.1.linux-amd64.tar.gz` download the package
+`tar -C /usr/local -xzf go.tar.gz` move the go to another folder
+`export PATH="/usr/local/go/bin:$PATH"`
+`export GOPATH="/go"`
+`export GOBIN="/usr/local/go/bin"` set paths to GO
+`go version` verify installation
+
 ## AWS EC2 instance
 https://www.youtube.com/watch?v=PzSUOyshA6k&ab_channel=LegionScript
 1. Create new account
@@ -303,26 +345,6 @@ application = get_wsgi_application()
 10. in settings.py file, set this
 `ALLOWED_HOSTS = ['TragicMagic.pythonanywhere.com']`
 11. Change to DEBUG = False
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## Terraform
 Used to automate cloud instance creation and streamline configuration process.

@@ -5,7 +5,7 @@ FROM python:3.10
 RUN apt-get update && apt-get install -y sqlite3
 
 # Set the working directory
-WORKDIR /workspaces/CS50_SQL/cyberchase
+WORKDIR /workspaces/CS50_SQL/
 
 # Copy your project files into the container
 COPY . .
