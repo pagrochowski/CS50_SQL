@@ -77,3 +77,6 @@
 ## Ollama
 `ollama serve` is starting the service on Linux
 `ollama run ...` and choose a model to run/download
+
+## SQLITE3
+`.headers on` display headers in SQLITE3
