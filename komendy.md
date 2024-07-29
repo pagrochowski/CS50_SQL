@@ -80,3 +80,5 @@
 
 ## SQLITE3
 `.headers on` display headers in SQLITE3
+`.read schema.sql` to import table creation from the schema file or commands from other sql file
+`.schema` check t he current schema for the tables
