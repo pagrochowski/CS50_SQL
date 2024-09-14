@@ -28,11 +28,11 @@ SET "mass" = ROUND("mass", 2)
 WHERE "mass" IS NOT NULL;
 
 UPDATE "meteorites_temp"
-SET "lat" = ROUND("mass", 2)
+SET "lat" = ROUND("lat", 2)
 WHERE "lat" IS NOT NULL;
 
 UPDATE "meteorites_temp"
-SET "long" = ROUND("mass", 2)
+SET "long" = ROUND("long", 2)
 WHERE "long" IS NOT NULL;
 
 -- 2.5. Convert the year column to an integer
@@ -45,20 +45,34 @@ WHERE "year" IS NOT NULL;
 DELETE FROM "meteorites_temp"
 WHERE "nametype" = 'Relict';
 
--- The meteorites are sorted by year, oldest to newest, and then—if any two meteorites landed in the same year—by name, in alphabetical order.
--- 4. Sort the meteorites_temp table by year, oldest to newest, and then if any two meteorites landed in the same year, by name, in alphabetical order
-CREATE INDEX IF NOT EXISTS "idx_year_name" ON "meteorites_temp" ("year", "name");
 
+-- 4. Recreate the meteorites_temp table without the id column
+CREATE TABLE "clean_meteorites" AS
+SELECT
+    "name", "class", "mass", "discovery", "year", "lat", "long"
+FROM
+    "meteorites_temp";
 
--- Creating meteorites table
+-- 5. Drop the old table that still has the id column
+DROP TABLE "meteorites_temp";
+
+-- 6. Create the final meteorites table with an auto-increment id
 CREATE TABLE IF NOT EXISTS "meteorites" (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    class TEXT,
-    mass INTEGER,
-    discovery TEXT,
-    year INTEGER,
-    lat INTEGER,
-    long INTEGER
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT, 
+    "class" TEXT,
+    "mass" REAL,
+    "discovery" TEXT,
+    "year" INTEGER,
+    "lat" REAL,
+    "long" REAL
 );
 
+-- 7. Insert sorted data into the meteorites table
+INSERT INTO "meteorites" ("name", "class", "mass", "discovery", "year", "lat", "long")
+SELECT "name", "class", "mass", "discovery", "year", "lat", "long"
+FROM "clean_meteorites"
+ORDER BY "year", "name";
+
+-- 8. Drop the temporary table as it is no longer needed
+DROP TABLE "clean_meteorites";
