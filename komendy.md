@@ -80,6 +80,7 @@
 
 ## SQLITE3
 `.headers on` display headers in SQLITE3
+`.timer on` display timer details for each query
 `.read schema.sql` to import table creation from the schema file or commands from other sql file
 `cat file.sql | sqlite3 database.db` execute file.sql commands into database.db
 `.schema` check t he current schema for the tables
