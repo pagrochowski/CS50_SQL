@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  python-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/workspaces/CS50_SQL  # Mount the current directory
+    command: bash  # Start with bash shell
+    stdin_open: true  # Keep STDIN open even if not attached
+    tty: true         # Allocate a pseudo-TTY
+    depends_on:
+      - mysql  # Ensure MySQL starts first
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: crimson  # Set the root password
+    ports:
+      - "3306:3306"  # Expose MySQL port
+    volumes:
+      - mysql-data:/var/lib/mysql  # Persist MySQL data
+
+volumes:
+  mysql-data:  # Define a named volume for MySQL data

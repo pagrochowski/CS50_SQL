@@ -84,3 +84,10 @@
 `.read schema.sql` to import table creation from the schema file or commands from other sql file
 `cat file.sql | sqlite3 database.db` execute file.sql commands into database.db
 `.schema` check t he current schema for the tables
+
+## MySQL (CS50_SQL dependant)
+In the folder with docker-compose.yml:
+`docker-compose up` starts mysql server
+`docker-compose run --service-ports python-app bash` starts python bash command line
+`mariadb -h mysql -u root -p` opens connection to mysql database
+password: crimson
