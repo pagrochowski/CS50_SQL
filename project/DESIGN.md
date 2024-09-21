@@ -1,6 +1,6 @@
 # Design Document
 
-By Piotr Grochowski
+By Piotr Grochowski (with help from ChatGPT)
 
 Video overview: <URL HERE>
 
@@ -75,12 +75,23 @@ flowchart TD
 In this section you should answer the following questions:
 
 * Which optimizations (e.g., indexes, views) did you create? Why?
+Views:
+LinguistServices: including Supplier name, supplier code, language pair, service type
+This view will be frequently used to search through contact details, language pair and service type. These are the most basic information for any job where you are looking to send the handoff out quickly. 
+
+Translators and Revisors views: specialized views for translators and revisors to simplify querying specific types of services.
 
 ## Limitations
 
 In this section you should answer the following questions:
 
 * What are the limitations of your design?
+There is no differentiation for different rates per different language pair. At the moment, each linguist only has one rate for all language pairs. 
+Data insertion is not completely fool proof. I did not use enumarator types for languages or service types. This may introduce human errors at some point, if somebody makes a typo or does not know exactly what to type in. 
 
 * What might your database not be able to represent very well?
 If one freelancer is able to work on multiple language pairs (rare but possible), we would need to duplicate entries for this linguist. 
+
+## Typical user queries
+
+

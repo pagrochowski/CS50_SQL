@@ -53,17 +53,47 @@ CREATE TABLE ServiceTypes (
     FOREIGN KEY (linguist_id) REFERENCES Linguists(id)
 );
 
--- service_type_id: Foreign key pointing to ServiceTypes.
--- rate_per_word: Rate per word (for translation or revision work).
--- rate_per_hour: Rate per hour (for hourly services).
--- art_code: Art code corresponding to the rate.
+CREATE VIEW LinguistServices AS
+SELECT
+    l.name AS supplier_name,
+    l.supplier_code,
+    lp.source_language || ' - ' || lp.target_language AS language_pair,
+    st.service_type,
+    st.sub_service_type,
+    st.rate_per_word,
+    st.rate_per_hour
+FROM Linguists l
+JOIN LanguagePairs lp ON l.id = lp.linguist_id
+JOIN ServiceTypes st ON l.id = st.linguist_id;
 
-CREATE TABLE Rates (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    service_type_id INTEGER,
-    rate_per_word REAL,
-    rate_per_hour REAL,
-    art_code TEXT,
-    FOREIGN KEY (service_type_id) REFERENCES ServiceTypes(id)
-);
+CREATE VIEW Translators AS
+SELECT
+    l.name AS supplier_name,
+    l.supplier_code,
+    lp.source_language || ' - ' || lp.target_language AS language_pair,
+    st.rate_per_word,
+    st.art_code
+FROM Linguists l
+JOIN LanguagePairs lp ON l.id = lp.linguist_id
+JOIN ServiceTypes st ON l.id = st.linguist_id
+WHERE st.service_type = 'Translation';
 
+CREATE VIEW Revisors AS
+SELECT
+    l.name AS supplier_name,
+    l.supplier_code,
+    lp.source_language || ' - ' || lp.target_language AS language_pair,
+    st.rate_per_word,
+    st.rate_per_hour,
+    st.art_code
+FROM Linguists l
+JOIN LanguagePairs lp ON l.id = lp.linguist_id
+JOIN ServiceTypes st ON l.id = st.linguist_id
+WHERE st.service_type = 'Revision';
+
+-- Indexes on supplier code, language_pair, service_type, and rate_per_word will optimize common queries, particularly when filtering and sorting.
+
+CREATE INDEX idx_language_pair ON LanguagePairs(source_language, target_language);
+CREATE INDEX idx_service_type ON ServiceTypes(service_type);
+CREATE INDEX idx_rate_per_word ON ServiceTypes(rate_per_word);
+CREATE INDEX idx_supplier_code ON Linguists(supplier_code);

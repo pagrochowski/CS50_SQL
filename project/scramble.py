@@ -1,7 +1,5 @@
-
 import csv
 import random
-import string
 
 
 def main():
@@ -10,7 +8,11 @@ def main():
     input_csv = 'input.csv'  # Path to your input CSV file
     output_csv = 'output.csv'  # Path to your output CSV file
 
-    scramble_csv(input_csv, output_csv)
+    # Specify columns to scramble (these must match the column headers exactly)
+    columns_to_scramble = ["Supplier name", "email address"]
+
+    scramble_csv(input_csv, output_csv, columns_to_scramble)
+
 
 # Function to scramble only the alphabetical characters in a string
 def scramble_text(text):
@@ -32,16 +34,29 @@ def scramble_text(text):
     
     return ''.join(result)
 
-# Function to read the CSV and scramble alphabetical data (excluding the header)
-def scramble_csv(input_file, output_file):
-    with open(input_file, mode='r', newline='', encoding='utf-8') as infile:
+
+# Function to read the CSV and scramble only specified columns (excluding the header)
+def scramble_csv(input_file, output_file, columns_to_scramble):
+    with open(input_file, mode='r', newline='', encoding='ISO-8859-1') as infile:
         reader = csv.reader(infile)
         rows = list(reader)
-        
+
+    # Get the header row
+    header = rows[0]
+
+    # Find the indices of the columns that need to be scrambled
+    scramble_indices = [header.index(col) for col in columns_to_scramble if col in header]
+
     # Scramble the rows (excluding the first row, i.e., header)
-    scrambled_rows = [rows[0]]  # Keep header intact
+    scrambled_rows = [header]  # Keep header intact
     for row in rows[1:]:
-        scrambled_row = [scramble_text(cell) for cell in row]
+        scrambled_row = []
+        for i, cell in enumerate(row):
+            # Scramble only if the column index is in the scramble_indices list
+            if i in scramble_indices:
+                scrambled_row.append(scramble_text(cell))
+            else:
+                scrambled_row.append(cell)
         scrambled_rows.append(scrambled_row)
     
     # Write the scrambled data to a new CSV file
