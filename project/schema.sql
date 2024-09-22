@@ -53,6 +53,8 @@ CREATE TABLE ServiceTypes (
     FOREIGN KEY (linguist_id) REFERENCES Linguists(id)
 );
 
+-- VIEWS
+
 CREATE VIEW LinguistServices AS
 SELECT
     l.name AS supplier_name,
@@ -64,7 +66,9 @@ SELECT
     st.rate_per_hour
 FROM Linguists l
 JOIN LanguagePairs lp ON l.id = lp.linguist_id
-JOIN ServiceTypes st ON l.id = st.linguist_id;
+JOIN ServiceTypes st ON l.id = st.linguist_id
+WHERE l.removed = 0;
+
 
 CREATE VIEW Translators AS
 SELECT
@@ -76,7 +80,9 @@ SELECT
 FROM Linguists l
 JOIN LanguagePairs lp ON l.id = lp.linguist_id
 JOIN ServiceTypes st ON l.id = st.linguist_id
-WHERE st.service_type = 'Translation';
+WHERE st.service_type = 'Translation'
+AND l.removed = 0;
+
 
 CREATE VIEW Revisors AS
 SELECT
@@ -89,7 +95,9 @@ SELECT
 FROM Linguists l
 JOIN LanguagePairs lp ON l.id = lp.linguist_id
 JOIN ServiceTypes st ON l.id = st.linguist_id
-WHERE st.service_type = 'Revision';
+WHERE st.service_type = 'Revision'
+AND l.removed = 0;
+
 
 -- Indexes on supplier code, language_pair, service_type, and rate_per_word will optimize common queries, particularly when filtering and sorting.
 

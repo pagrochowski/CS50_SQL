@@ -1,8 +1,13 @@
 # Design Document
 
-By Piotr Grochowski (with help from ChatGPT)
+By Piotr Grochowski 
 
-Video overview: <URL HERE>
+project’s title: Resources_list
+your GitHub and edX usernames: pagrochowski
+your city and country: Whitefield, United Kingdom
+Recording date: 22 September 2024
+
+Video overview: [https://youtu.be/6umQbT0KHZc]
 
 ## Scope
 
@@ -45,7 +50,7 @@ I want to prevent data pollution, some users might not realise that certain info
 
 In this section you should include your entity relationship diagram and describe the relationships between the entities in your database.
 
-![IMAGE TITLE](Linguists.png)
+![Linguists.png]
 
 flowchart TD
     A["Linguists"] --> B["Contact Details"] & C["Language Pairs"] & D["Service Type"]
@@ -91,7 +96,4 @@ Data insertion is not completely fool proof. I did not use enumarator types for 
 
 * What might your database not be able to represent very well?
 If one freelancer is able to work on multiple language pairs (rare but possible), we would need to duplicate entries for this linguist. 
-
-## Typical user queries
-
 
